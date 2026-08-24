@@ -13,12 +13,8 @@ function Footer() {
               to="/"
               className="text-xl font-bold text-primary"
             >
-              Simple Logo
+              Voxel
             </Link>
-
-            <p className="mt-2 text-sm text-base-content/60 font-mono">
-              Simple online store.
-            </p>
           </div>
 
           {/* LINKS */}

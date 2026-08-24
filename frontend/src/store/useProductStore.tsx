@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import axios from 'axios'
-import type { Product } from "../types/Product"
+import type { Product } from "../types/product.types"
 
 const BASE_URL = 'http://localhost:3000'
 

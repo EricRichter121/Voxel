@@ -37,7 +37,7 @@ export class AuthService {
 
         const user = await prisma.user.create({
             data: {
-                name: data.username,
+                name: data.name,
                 email: data.email,
                 passwordHash
             }

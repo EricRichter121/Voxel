@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
 import AboutPage from './pages/AboutPage'
+import AuthPage from './pages/AuthPage'
 // import NotFoundPage from './pages/NotFoundPage'
 import CategoriesPage from './pages/CategoriesPage'
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
+        <Route path="/auth" element={<AuthPage />} />
       </Routes>
 
       <Footer />

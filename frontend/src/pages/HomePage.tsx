@@ -22,13 +22,13 @@ function HomePage() {
   }
 
   return (
-    <main className="container mx-auto p-4 max-w-6xl">
+    <main className="container mx-auto p-4 max-w-6xl ">
 
       <div className="mb-6">
         {loading ? (
-          <h2 className="text-center text-lg font-semibold">Loading products...</h2>
+          <h2 className="text-center text-xl font-semibold">Loading products...</h2>
         ) : (
-          <h2 className="text-center text-lg font-semibold">Products</h2>
+          <h2 className="text-center text-2xl font-semibold">Products</h2>
         )
       }
       </div>

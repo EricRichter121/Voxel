@@ -1,5 +1,5 @@
 import { PlusCircleIcon } from 'lucide-react'
-import type { Product } from "../types/Product"
+import type { Product } from "../types/product.types"
 import { Link } from 'react-router-dom'
 
 function ProductCard({ product }: { product: Product }) {

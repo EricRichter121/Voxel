@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ShoppingCartIcon } from 'lucide-react'
 import { CircleUserRound } from 'lucide-react'
 
@@ -6,9 +6,9 @@ function NavBar() {
   const location = useLocation()
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Categories', path: '/categories'},
     { name: 'About', path: '/about' },
-    { name: 'Search', path: '/search'}
+    { name: 'Search', path: '/search'},
+    { name: 'Sign Up', path: '/auth' },
   ]
 
   // проверяем, активен ли путь, чтобы подсветить активную ссылку
@@ -20,7 +20,7 @@ function NavBar() {
           <div className="flex items-center justify-between min-h-16">
             {/* LOGO */}
             <div className="shrink-0">
-              <Link to="/" className="text-xl font-bold text-primary">Simple Logo</Link>
+              <Link to="/" className="text-xl font-bold text-primary">Voxel</Link>
             </div>
             {/* NAVIGATION LINKS */}
             <div className="hidden md:flex space-x-4">
