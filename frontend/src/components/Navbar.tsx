@@ -1,20 +1,38 @@
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ShoppingCartIcon } from 'lucide-react'
-import { CircleUserRound } from 'lucide-react'
+import { CircleUserRound, ShoppingCartIcon, X } from 'lucide-react'
+import SignUpForm from './SignUpForm'
+import SignInForm from './SignInForm'
 
 function NavBar() {
   const location = useLocation()
+  const [hasToken, setHasToken] = useState(() => Boolean(cookieStore.get('token')))
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false)
+  const [isSignInOpen, setIsSignInOpen] = useState(false)
+
+  useEffect(() => {
+    const updateTokenVisibility = () => setHasToken(Boolean(cookieStore.get('token')))
+
+    window.addEventListener('storage', updateTokenVisibility)
+    window.addEventListener('auth-change', updateTokenVisibility)
+
+    return () => {
+      window.removeEventListener('storage', updateTokenVisibility)
+      window.removeEventListener('auth-change', updateTokenVisibility)
+    }
+  }, [])
+
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Search', path: '/search'},
-    { name: 'Sign Up', path: '/auth' },
   ]
 
   // проверяем, активен ли путь, чтобы подсветить активную ссылку
   const isActiveLink = (path: string) => location.pathname === path
 
   return (
+    <>
       <div className="bg-base-100/80 backdrop-blur-md border-b border-base-content/10 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between min-h-16">
@@ -36,9 +54,36 @@ function NavBar() {
                   {link.name}
                 </Link>
               ))}
+              {hasToken && (
+                <>
+                  <button
+                  className="text-base font-mono text-base-content transition-colors duration-300 hover:text-primary"
+                  onClick={() => setIsSignInOpen(true)}
+                  type="button"
+                >
+                  Sign In
+                </button>
+                <button
+                  className="text-base font-mono text-base-content transition-colors duration-300 hover:text-primary"
+                  onClick={() => setIsSignUpOpen(true)}
+                  type="button"
+                >
+                  Sign Up
+                </button>
+                </>
+              )}
             </div>
             {/* RIGHT SECTION */}
             <div className="flex items-center space-x-8">
+                {/* {hasToken && (
+                  <button
+                    className="text-base font-mono text-base-content transition-colors duration-300 hover:text-primary md:hidden"
+                    onClick={() => setIsSignUpOpen(true)}
+                    type="button"
+                  >
+                    Sign Up
+                  </button>
+                )} */}
                 <Link to="/cart" className="text-base font-mono text-base-content hover:text-primary transition-colors duration-300">
                     <ShoppingCartIcon className="h-6 w-6" />
                 </Link>
@@ -49,7 +94,52 @@ function NavBar() {
             </div>
           </div> 
         </div>
+
       </div>
+
+      {hasToken && (
+        <dialog className={`modal ${isSignUpOpen ? 'modal-open' : ''}`} open={isSignUpOpen}>
+          <div className="modal-box max-h-[90vh] max-w-lg overflow-y-auto border-2 border-base-content/10 bg-base-100 shadow-lg shadow-base-content/5 pt-2">
+            <div className="flex items-center justify-end px-4 pt-4">
+              <button
+                aria-label="Close sign up dialog"
+                className="btn btn-ghost btn-sm btn-square"
+                onClick={() => setIsSignUpOpen(false)}
+                title="Close sign up dialog"
+                type="button"
+              >
+                <X aria-hidden="true" className="h-5 w-5" />
+              </button>
+            </div>
+            <SignUpForm />
+          </div>
+          <form className="modal-backdrop" method="dialog">
+            <button onClick={() => setIsSignUpOpen(false)} type="submit">close</button>
+          </form>
+        </dialog>
+      )}
+      {hasToken && (
+        <dialog className={`modal ${isSignInOpen ? 'modal-open' : ''}`} open={isSignInOpen}>
+          <div className="modal-box max-h-[90vh] max-w-lg overflow-y-auto border-2 border-base-content/10 bg-base-100 shadow-lg shadow-base-content/5 pt-2">
+            <div className="flex items-center justify-end px-4 pt-4">
+              <button
+                aria-label="Close sign in dialog"
+                className="btn btn-ghost btn-sm btn-square"
+                onClick={() => setIsSignInOpen(false)}
+                title="Close sign in dialog"
+                type="button"
+              >
+                <X aria-hidden="true" className="h-5 w-5" />
+              </button>
+            </div>
+            <SignInForm />
+          </div>
+          <form className="modal-backdrop" method="dialog">
+            <button onClick={() => setIsSignInOpen(false)} type="submit">close</button>
+          </form>
+        </dialog>
+      )}
+    </>
   )
 }
 

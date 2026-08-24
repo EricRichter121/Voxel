@@ -43,19 +43,11 @@ function SignUpForm() {
   }
 
   return (
-    <section className="w-full max-w-md rounded-2xl border border-base-content/10 bg-base-100 p-6 shadow-xl shadow-base-content/5 sm:p-8">
-      <div className="mb-8">
-        <p className="mb-1 text-sm font-medium text-primary">
-          Banana Shop
-        </p>
-
+    <section className="w-full bg-base-100 sm:p-8 sm:pt-0">
+      <div className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-base-content">
           Create your account
         </h1>
-
-        <p className="mt-2 text-sm text-base-content/60">
-          Sign up to start shopping.
-        </p>
       </div>
 
       <form className="space-y-5" onSubmit={handleSubmit}>

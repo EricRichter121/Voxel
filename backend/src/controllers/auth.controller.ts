@@ -8,7 +8,7 @@ export const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: config.env === 'production',
   sameSite: 'lax' as const,
-  maxAge: 1000 * 60 * 15 // milliseconds | seconds | minutes 
+  maxAge: 1000 * 60 * 30 // milliseconds | seconds | minutes 
 }
 
 export class AuthController {

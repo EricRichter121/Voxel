@@ -20,9 +20,15 @@ export const login = async (
   data: SignInData
 ): Promise<AuthResponse> => {
   const response = await axios.post<AuthResponse>(
-    "/api/auth/login",
+    "http://localhost:3000/api/auth/login",
     data
   );
 
+  console.log(response.data)
+
   return response.data;
 };
+
+export const logout = async (): Promise<void> => {
+  await axios.post("/api/auth/logout");
+}
