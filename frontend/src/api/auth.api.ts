@@ -1,34 +1,48 @@
-import axios from "axios";
+import { api } from './axios'
+
 import type {
   SignUpData,
   SignInData,
   AuthResponse,
-} from "../types/auth.types";
+  User,
+} from '../types/auth.types'
 
 export const register = async (
   data: SignUpData
 ): Promise<AuthResponse> => {
-  const response = await axios.post<AuthResponse>(
-    "http://localhost:3000/api/auth/register", // Добавлено http://
+  const response = await api.post<AuthResponse>(
+    '/auth/register',
     data
-  );
+  )
 
-  return response.data;
-};
+  return response.data
+}
 
 export const login = async (
   data: SignInData
 ): Promise<AuthResponse> => {
-  const response = await axios.post<AuthResponse>(
-    "http://localhost:3000/api/auth/login",
+  const response = await api.post<AuthResponse>(
+    '/auth/login',
     data
-  );
+  )
 
-  console.log(response.data)
-
-  return response.data;
-};
+  return response.data
+}
 
 export const logout = async (): Promise<void> => {
-  await axios.post("/api/auth/logout");
+  await api.post('/auth/logout')
+}
+
+export const getCurrentUser = async (): Promise<User | null> => {
+  try {
+    const response = await api.get<{ user: User }>('/auth/me')
+
+    return response.data.user
+  } catch (error: any) {
+    if (error.response?.status === 401) {
+      return null
+    }
+
+    throw error
+  }
 }

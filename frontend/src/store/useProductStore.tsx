@@ -34,7 +34,4 @@ export const useProductStore = create<ProductStore>((set) => ({
             set({ loading: false })
         }
     },
-    fetchProduct: async (id: string) => {
-        
-    }
 }))

@@ -1,39 +1,56 @@
-// import { type Request, type Response, type NextFunction } from "express";
-// // import jwt from "jsonwebtoken";
-// import { AuthService } from "../services/auth.service.js";
+// Сервер: src/middlewares/auth.middleware.ts
 
-// // interface JwtPayload {
-// //     id: string;
-// //     email: string;
-// // }
+import type {
+  Request,
+  Response,
+  NextFunction,
+} from 'express'
+import jwt from 'jsonwebtoken'
 
-// export const authMiddleware = (
-//     req: Request,
-//     res: Response,
-//     next: NextFunction
-// ): void => {
-//     const token = req.cookies.accessToken;
-    
-//     if (!token) {
-//         res.status(401).json({
-//             message: "Authorization header is missing"
-//         })
-//         return
-//     };
-    
-//     const payload = AuthService.verifyToken(token);
+interface AccessTokenPayload {
+  userId: string
+}
 
-//     req.user = payload
-    
-//     next();
-// }
+export function authenticateToken(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  console.log('Cookies:', req.cookies)
+  console.log('Access token:', req.cookies.accessToken)
 
+  const token = req.cookies.accessToken
 
+  if (!token) {
+    return res.status(401).json({
+      message: 'Access token is missing',
+    })
+  }
 
+  try {
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_SECRET!,
+    ) as AccessTokenPayload
 
+    console.log('JWT payload:', payload)
 
+    if (!payload.userId) {
+      return res.status(401).json({
+        message: 'Invalid token payload',
+      })
+    }
 
+    req.auth = {
+      userId: payload.userId,
+    }
 
+    return next()
+  } catch (error) {
+    console.error('JWT verification error:', error)
 
-
-
+    return res.status(401).json({
+      message: 'Invalid or expired access token',
+    })
+  }
+}

@@ -1,34 +1,27 @@
-// hooks/useSignUp.ts
+import {
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 
-import { useState } from 'react'
 import { login } from '../api/auth.api'
 import type { SignInData } from '../types/auth.types'
 
 export const useSignIn = () => {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const queryClient = useQueryClient()
 
-  const signIn = async (data: SignInData) => {
-    try {
-      setLoading(true)
-      setError(null)
+  const mutation = useMutation({
+    mutationFn: (data: SignInData) => login(data),
 
-      const response = await login(data)
-
-      return response
-    } catch (error) {
-      setError('Registration failed')
-      console.log(error);
-      
-      throw error
-    } finally {
-      setLoading(false)
-    }
-  }
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['currentUser'],
+      })
+    },
+  })
 
   return {
-    signIn,
-    loading,
-    error,
+    signIn: mutation.mutateAsync,
+    loading: mutation.isPending,
+    error: mutation.error,
   }
 }

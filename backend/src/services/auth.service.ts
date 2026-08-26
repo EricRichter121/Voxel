@@ -6,6 +6,7 @@ import type { User } from "../generated/prisma/client.js";
 
 import { type RegisterDTO } from '../dto/create-user.dto.js';
 import { type LoginDTO } from '../dto/login-user.dto.js';
+import { type CurrentUserDTO } from '../dto/current-user.dto.js'
 
 type AuthResult = {
     user: Omit<User, "passwordHash">
@@ -100,5 +101,24 @@ export class AuthService {
         { expiresIn: "7d" }
         );
     }
+
+    static async getCurrentUser(
+    userId: string,
+  ): Promise<CurrentUserDTO | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+      },
+    })
+
+    return user
+  }
+
 
 }

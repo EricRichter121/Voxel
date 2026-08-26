@@ -1,37 +1,41 @@
-import { useState } from 'react'
-import type { SubmitEvent } from 'react'
+import { useState } from 'react'  
 import {
   ArrowRight,
   Eye,
   EyeOff,
   LockKeyhole,
-  Mail,
-  UserRound,
+  Mail
 } from 'lucide-react'
+
 import { useSignIn } from '../hooks/useSignIn'
 
 function SignInForm() {
   const { signIn, loading, error } = useSignIn()
-
   const [showPassword, setShowPassword] = useState(false)
-  const [passwordError, setPasswordError] = useState('')
 
-  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.SubmitEvent<HTMLFormElement>
+  ) => {
     event.preventDefault()
 
     const form = event.currentTarget
     const data = new FormData(form)
 
+    const email = data.get('email')
     const password = data.get('password')
 
-    setPasswordError('')
+    if (
+      typeof email !== 'string' ||
+      typeof password !== 'string'
+    ) {
+      return
+    }
 
     await signIn({
-      email: data.get('email') as string,
-      password: password as string,
+      email,
+      password,
     })
   }
-
   return (
     <section className="w-full bg-base-100 sm:p-8 sm:pt-0">
       <div className="mb-4">
@@ -95,11 +99,11 @@ function SignInForm() {
           </span>
         </label>
 
-        {error && (
+        {/* {error && (
           <p className="text-sm text-error">
             {error}
           </p>
-        )}
+        )} */}
 
         <button
           className="btn btn-primary w-full gap-2 mt-4"

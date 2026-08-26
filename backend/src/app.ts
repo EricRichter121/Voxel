@@ -1,11 +1,10 @@
 import express from 'express'
+import cors from 'cors'
 import type { 
     Request,
     Response,
     Express
 } from 'express'
-import cors from 'cors'
-
 import cookieParser from 'cookie-parser';
 
 import router from './routes/index.route.js';
@@ -13,6 +12,7 @@ import router from './routes/index.route.js';
 export const app: Express = express();
 
 app.use(express.json())
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // 
@@ -22,7 +22,6 @@ app.use(cors({
 }));
 
 app.use('/api', router)
-app.use(cookieParser());
 
 interface HealthResponse {
     status: 'ok',

@@ -19,3 +19,12 @@ export interface AuthResponse {
     email: string
   }
 }
+
+export interface User {
+  id: string
+  email: string
+}
+
+export interface MeResponse{
+  user: User
+}
