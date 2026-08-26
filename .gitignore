@@ -1,0 +1,4 @@
+backend/.agents/
+backend/.claude/
+backend/.windsurf/
+.vscode
