@@ -31,6 +31,7 @@ export const login = async (
 
 export const logout = async (): Promise<void> => {
   await api.post('/auth/logout')
+  console.log('logout...')
 }
 
 export const getCurrentUser = async (): Promise<User | null> => {

@@ -47,7 +47,7 @@ export class AuthController {
     next: NextFunction) {
     try {
       res.clearCookie("accessToken")
-      res.status(204)
+      res.json('Success logout')
     } catch (error) {
       next(error)
     } 

@@ -5,13 +5,16 @@ import { CircleUserRound, ShoppingCartIcon, X } from 'lucide-react'
 
 import SignUpForm from './SignUpForm'
 import SignInForm from './SignInForm'
+import { useSignOut } from '../hooks/useSignOut'
 
 function NavBar() {
   const location = useLocation()
 
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
   const [isSignInOpen, setIsSignInOpen] = useState(false)
-
+  const { signOut, loading } = useSignOut()
+  
+  
   const {
     data: user,
     isPending,
@@ -51,7 +54,7 @@ function NavBar() {
                   {link.name}
                 </Link>
               ))}
-              {!isPending && !isAuthenticated && (
+              {!isPending && !isAuthenticated ? ( 
                 <>
                   <button
                     className="text-base font-mono text-base-content transition-colors duration-300 hover:text-primary"
@@ -67,6 +70,17 @@ function NavBar() {
                     type="button"
                   >
                     Sign Up
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="text-base font-mono text-base-content transition-colors duration-300 hover:text-primary"
+                    onClick={() => signOut()}       // 2. Привязываем функцию выхода к клику
+                    disabled={loading}      // 3. Блокируем кнопку во время загрузки
+                    type="button"
+                  >
+                    {loading ? 'Signing out...' : 'Sign Out'}
                   </button>
                 </>
               )}
