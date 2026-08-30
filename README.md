@@ -1,14 +1,14 @@
 # Voxel Store
 
-A full-stack marketplace for 3D models, built with React, TypeScript, Express and PostgreSQL.
+A full-stack marketplace for buying and downloading 3D models.
 
-Voxel Store allows users to browse 3D models, view product details, authenticate, and manage products in their shopping cart.
+Voxel Store is a web application where users can browse 3D models, view detailed information about individual models, add models to their cart, and purchase them.
 
 ## Project Status
 
 🚧 **In development**
 
-The project is currently being developed as a portfolio full-stack application. The core architecture, authentication, product catalog, and cart functionality are implemented, while some marketplace features are still in progress.
+The project is currently under active development. The core application architecture, authentication, model catalog, and shopping cart functionality are implemented. The model purchasing and download functionality is still in progress.
 
 ## Features
 
@@ -16,18 +16,18 @@ The project is currently being developed as a portfolio full-stack application. 
 
 * User registration and authentication
 * JWT-based authentication with HTTP-only cookies
-* Product catalog
-* Product details page
-* Product categories
+* 3D model catalog
+* Model details page
+* Model tags
 * Shopping cart
-* Add and remove products from cart
+* Add and remove models from cart
 * Responsive UI
 * Client-side state management
 * Server-side validation
 
 ### In Progress
 
-* Product purchasing flow
+* Model purchasing flow
 * Purchase history
 * Model downloads
 * Additional marketplace functionality
@@ -217,7 +217,6 @@ npm run dev       Start the development server with automatic reload
 * [x] User authentication
 * [x] Product catalog
 * [x] Product details page
-* [x] Categories
 * [x] Shopping cart
 * [ ] Product purchasing
 * [ ] Purchase history
