@@ -32,7 +32,6 @@ interface HealthResponse {
 app.get('/api/health', (req: Request, res: Response<HealthResponse>) => {
     res.json({
         status: 'ok',
-        message:'My mental state is deteriorating.',
         timestamp: new Date().toISOString()
     })
 })
